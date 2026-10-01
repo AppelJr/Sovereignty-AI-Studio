@@ -1,15 +1,15 @@
 FROM python:3.13-slim
 
 WORKDIR /app
-COPY . .
 
-RUN python3 -m venv /app/.venv \
-    && /app/.venv/bin/pip install --upgrade pip \
-    && /app/.venv/bin/pip install --no-cache-dir -r requirements-docker.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir prometheus-client
 
-RUN mkdir -p /app/logs && chmod 700 /app/logs
+COPY agents/judge_agent/ ./agents/judge_agent/
+COPY agents/__init__.py ./agents/
 
-ENV PYTHONUNBUFFERED=1
-ENV PATH="/app/.venv/bin:$PATH"
+ENV JUDGE_METRICS_PORT=9897
 
-CMD ["python3", "-m", "uvicorn", "backend.app.main:app", "--host", "127.0.0.1", "--port", "8000"]
+EXPOSE 9897
+
+CMD ["python", "-m", "agents.judge_agent.judge"]
