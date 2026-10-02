@@ -1,0 +1,19 @@
+{
+  "owner_id": "string",
+  "packet_id": "string",
+  "intent": "string",
+  "action_type": "repair | sabotage",
+  "timestamp": "ISO-8601",
+  "actor_id": "string",
+  "signature": "ML-DSA signature",
+  "previous_hash": "string",
+  "current_hash": "string",
+  "entry": {
+    "why": "string",
+    "what": "string",
+    "when": "string",
+    "who": "string",
+    "where": "string",
+    "how": "string"
+  }
+}
