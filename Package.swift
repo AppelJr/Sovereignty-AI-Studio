@@ -16,8 +16,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SovereigntyGuard",
-            path: "Sources/SovereigntyGuard"
+            name: "SovereigntyGuard"
         )
     ]
 )
