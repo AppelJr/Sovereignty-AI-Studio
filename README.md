@@ -2,12 +2,12 @@
 
 @claude @codex @copilot @grok
 
-This is the main dedicated branch. All changes by Claude Grok/Ara GPT/Codex Copilot must be made in their dedicated branch. Do not push directly to main. Create a Pull Request for review.
+This is the main dedicated branch. All changes by Claude Grok/Ara GPT/Codex Copilot must be made in their dedicated branch. Do not push directly to main. stay in individual lanes independently must update branch to current then Create a Pull Request for review.
 
 
 Sovereignty AI Studio is a self-hosted, offline-first AI control surface and
-supporting service stack. The primary user interface is the KODER dashboard in
-[`SGHv119.html`](SGHv119.html); Python and Node services provide local routing,
+supporting service stack. The primary user interface is the KODER 9898 frontend dashboard in
+[`DevAssist420SGHv119.html`](DevAssist420SGHv119.html); Python and Node services provide local routing,
 agent orchestration, and optional self-hosted integrations.
 
 ## What is included
@@ -26,8 +26,8 @@ agent orchestration, and optional self-hosted integrations.
 
 Requirements:
 
-- Python 3.11 or later
-- Node.js 20 or later
+- Python 3.12 or later
+- Node.js 24 or later
 
 Install the checked-in runtime dependencies. This creates `.venv` and installs
 both Node workspaces; it does not create credentials, substitute a model, or
@@ -55,7 +55,7 @@ services:
 Open the dashboard at:
 
 ```text
-http://127.0.0.1:9898/SGHv119.html
+http://127.0.0.1:9898/DevAssist420SGHv119.html
 ```
 
 The launcher starts these loopback services:
@@ -126,10 +126,10 @@ are in [Offline runtime and transport policy](docs/OFFLINE_RUNTIME.md).
 ## Repository layout
 
 ```text
-SGHv119.html       KODER dashboard
+DevAssist420SGHv119.html       KODER 9898 frontend dashboard
 START_SERVER.sh    Local three-service launcher
-bridge.py          Python local bridge
-node-bridge/       Node HTTP/API bridge
+bridge.py          Python 9897 local bridge
+node-bridge/       Node 9899 HTTP/API bridge
 backend/           FastAPI backend services
 gateway/           Python multi-agent gateway
 agents/            Agent service definitions
