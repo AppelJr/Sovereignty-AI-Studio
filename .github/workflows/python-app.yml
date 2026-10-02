@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
     - name: Set up Python 3.13
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@635afcee515281e9e4f61ca20847e9297c22ea9d9bbe2128ddc2b12c8081be77
       with:
         python-version: "3.13"
     - name: Install dependencies
