@@ -33,16 +33,15 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install flake8 pytest
           python -m pip install numpy
-          if [ -f requirements.txt ]; then
+
+          if [[ -f requirements.txt ]]; then
             python -m pip install -r requirements.txt
           fi
 
-          if [ -f pyproject.toml ] || [ -f setup.py ] || [ -f setup.cfg ]; then
-            python -m pip install -e .
-          fi
-
-      - name: Lint with flake8
+      - name: Verify Python source
         shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
 
@@ -55,7 +54,31 @@ jobs:
               -not -path "./venv/*"
           )
 
-          if [ "${#python_files[@]}" -eq 0 ]; then
+          if [[ "${#python_files[@]}" -eq 0 ]]; then
+            echo "No Python files found."
+            exit 0
+          fi
+
+          echo "Checking ${#python_files[@]} Python file(s)"
+          python -m compileall -q "${python_files[@]}"
+
+      - name: Lint with flake8
+        shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+
+          mapfile -t python_files < <(
+            find . \
+              -type f \
+              -name "*.py" \
+              -not -path "./.git/*" \
+              -not -path "./.venv/*" \
+              -not -path "./venv/*"
+          )
+
+          if [[ "${#python_files[@]}" -eq 0 ]]; then
             echo "No Python files found; skipping lint."
             exit 0
           fi
@@ -79,6 +102,8 @@ jobs:
 
       - name: Test with pytest
         shell: bash
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
 
@@ -95,9 +120,10 @@ jobs:
               -not -path "./venv/*"
           )
 
-          if [ "${#test_files[@]}" -eq 0 ]; then
+          if [[ "${#test_files[@]}" -eq 0 ]]; then
             echo "No pytest test files found; skipping tests."
             exit 0
           fi
 
-          pytest -q
+          echo "Running ${#test_files[@]} pytest test file(s)"
+          python -m pytest -q
