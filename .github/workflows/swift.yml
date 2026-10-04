@@ -1,4 +1,4 @@
-name: Swift.yml
+name: Swift
 
 on:
   push:
@@ -6,11 +6,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs: 
- build: Swift-project
-runs-on: macos-latest
-uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
-name: "Build Swift latest"
-    run: |
-     swift build ios-latest -v
-     swift test -v
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
