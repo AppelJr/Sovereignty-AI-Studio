@@ -54,14 +54,16 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Refresh lockfile and run npm audit
-        working-directory: node-bridge
         run: |
           set -Eeuo pipefail
-          if [[ -f package.json ]]; then
+          if [[ -f node-bridge/package.json || -f package.json ]]; then
+            if [[ -f node-bridge/package.json ]]; then
+              cd node-bridge
+            fi
             npm install --package-lock
             npm audit --audit-level=moderate
           else
-            echo "No package.json in node-bridge — audit skipped"
+            echo "No package.json present — Node audit skipped"
           fi
 
   requirements-lint:
