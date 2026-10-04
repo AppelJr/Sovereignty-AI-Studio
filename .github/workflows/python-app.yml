@@ -67,6 +67,7 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
+          pip install numpy
           set -euo pipefail
 
           mapfile -t python_files < <(
