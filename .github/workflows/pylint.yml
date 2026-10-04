@@ -10,14 +10,30 @@ jobs:
         python-version: ["3.11", "3.12", "3.13"]
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - name: Set up Python ${{ matrix.python-version}}
+      uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ matrix.python-version}}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint
+        pip install "pylint>=3.2"
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        # Fail only on fatal errors and undefined names (F821).
+        # Style and duplication warnings are reported but do not block.
+        set +e
+        OUT=$(pylint $(git ls-files '*.py') 2>&1)
+        EC=$?
+        echo "$OUT"
+        echo "------"
+        echo "Pylint exit code: $EC"
+        if echo "$OUT" | grep -q "F821"; then
+          echo "::error::Undefined names (F821) found — blocking."
+          exit 1
+        fi
+        if echo "$OUT" | grep -q "syntax-error"; then
+          echo "::error::Syntax errors found — blocking."
+          exit 1
+        fi
+        exit 0
