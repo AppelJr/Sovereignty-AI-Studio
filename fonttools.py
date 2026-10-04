@@ -1,12 +1,18 @@
-# Make sure that you have a stable internet connection
+#!/usr/bin/env python3
+"""Website status checker.
+
+Checks a list of websites and reports UP/DOWN status.
+"""
+
+import requests
+
 status_dict = {}
 # sample websites
-websites = [
-    
-]
+websites = []
 
-def check_websites(websites):
-    for item in websites:
+
+def check_websites(sites):
+    for item in sites:
         website = item.strip()
         status = requests.get(website).status_code
         status_dict[website] = "UP" if status == 200 else "DOWN"
@@ -15,4 +21,5 @@ def check_websites(websites):
     print(status_dict)
 
 
-check_websites(websites)
+if __name__ == "__main__":
+    check_websites(websites)
