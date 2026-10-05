@@ -2,9 +2,11 @@ name: Python application
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -39,7 +41,7 @@ jobs:
       - name: Verify Python source
         shell: bash
         env:
-          PYTHONPATH: ${{ github.workspace}}
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
 
@@ -62,8 +64,7 @@ jobs:
 
       - name: Lint with flake8
         shell: bash
-        env:
-          PYTHONPATH: ${{ github.workspace}}
+        env: PYTHONPATH: ${{ github.workspace }}
         run: |
           pip install numpy
           set -euo pipefail
@@ -102,7 +103,7 @@ jobs:
       - name: Test with pytest
         shell: bash
         env:
-          PYTHONPATH: ${{ github.workspace}}
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           set -euo pipefail
 
