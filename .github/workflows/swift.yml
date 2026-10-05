@@ -12,8 +12,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: swift build -v
+    - uses: actions/checkout@v5
+    - name: Build v1.0.1
+      shell: bash
+      run: |
+       swift build -v
     - name: Run tests
-      run: swift test -v
+      run: |
+       swift test -v
