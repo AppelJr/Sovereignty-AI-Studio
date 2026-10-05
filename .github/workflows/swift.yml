@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
-    - name: Build v1.0.1
+    - name: Build Swift v6.4
       shell: bash
       run: |
        swift build -v
-    - name: Run tests
+    - name: Run tests Swift v6.4
       run: |
        swift test -v
