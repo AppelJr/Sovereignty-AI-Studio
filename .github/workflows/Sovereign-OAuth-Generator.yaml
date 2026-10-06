@@ -70,14 +70,12 @@ jobs:
             ls -la scripts/ || true
             exit 1
           fi
-          # Production execution - no tests, no avatar, real Ed25519 path
           python3 scripts/oauth_local_generator.py --dry-run
           echo "OAuth generator completed successfully"
 
       - name: Confirm no avatar interference
         run: |
           set -Eeuo pipefail
-          # Hard fail if any avatar companion residue is in the OAuth path
           if find . -name '*avatar*companion*' -o -name 'Avatar_Companion*' 2>/dev/null | grep -q .; then
             echo "ERROR: Avatar companion artifacts detected in OAuth workspace - isolation violated"
             find . -name '*avatar*companion*' -o -name 'Avatar_Companion*' 2>/dev/null
